@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type FormEvent, type ReactNode } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 
 type Message = {
   role: 'user' | 'assistant'
@@ -14,29 +14,37 @@ const suggestions = [
   'Should I pause any subscriptions this month?',
 ]
 
+const getFormattedTime = () =>
+  new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+
 export default function AIAgentAdvisor() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
       text: 'Hi! I can help you plan savings, review subscriptions, and suggest a debt payoff strategy.',
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      time: '--:--',
     },
   ])
   const [input, setInput] = useState('')
 
+  useEffect(() => {
+    setMessages((prev) =>
+      prev.map((message, index) => (index === 0 ? { ...message, time: getFormattedTime() } : message)),
+    )
+  }, [])
+
   const send = (text: string) => {
     if (!text.trim()) return
-    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    const next: Message[] = [
-      ...messages,
+    const now = getFormattedTime()
+    setMessages((prev) => [
+      ...prev,
       { role: 'user', text, time: now },
       {
         role: 'assistant',
         text: `Simulated advice for: "${text}" — this would be connected to an AI provider in the final version.`,
         time: now,
       },
-    ]
-    setMessages(next)
+    ])
     setInput('')
   }
 
