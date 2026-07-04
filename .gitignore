@@ -1,3 +1,9 @@
 node_modules/
 .next/
+out/
 *.log
+backend/data.json
+tsconfig.tsbuildinfo
+*.jpeg
+*.jpg
+*.png

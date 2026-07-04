@@ -1,62 +1,72 @@
 @echo off
-title Saving Wedding App
+setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
-color 0B
 
-echo ============================================================
-echo  Saving Wedding App
-echo ============================================================
-echo.
+set "FRONTEND_URL=http://localhost:3001"
+set "BACKEND_URL=http://localhost:3002"
 
-echo  Checking Node.js...
-node --version >nul 2>nul
+title Saving Wedding App
+
+echo Checking Node.js...
+where node >nul 2>nul
 if %ERRORLEVEL% NEQ 0 (
-  echo ERROR: Node.js is not installed or not in PATH.
-  pause
-  exit /b 1
+    echo ERROR: Node.js is not installed or not in PATH.
+    pause
+    exit /b 1
 )
 
-echo  Ensuring dependencies...
+node --version
+if %ERRORLEVEL% NEQ 0 (
+    echo ERROR: Node.js failed to run.
+    pause
+    exit /b 1
+)
+
+echo Ensuring dependencies...
 call npm install --no-audit --no-fund
 if %ERRORLEVEL% NEQ 0 (
-  echo ERROR: npm install failed.
-  pause
-  exit /b 1
+    echo ERROR: npm install failed.
+    pause
+    exit /b 1
 )
 
-echo.
-echo  Starting backend...
-start "Saving Wedding App Backend" /B cmd.exe /c "node backend/server.js"
-
-echo Waiting for backend on port 3002...
-powershell.exe -Command "while(-not (Get-NetTCPConnection -LocalPort 3002 -ErrorAction SilentlyContinue)){ Start-Sleep -Milliseconds 400 }"
-echo Backend is up.
-
-echo  Starting frontend...
-start "Saving Wedding App Frontend" /B cmd.exe /c "npm run dev"
-
-echo Waiting for frontend on port 3001...
-powershell.exe -Command "while(-not (Get-NetTCPConnection -LocalPort 3001 -ErrorAction SilentlyContinue)){ Start-Sleep -Milliseconds 600 }"
-echo Frontend is up.
-
-echo.
-echo Launching in Google Chrome...
-set "CHROME_URL=http://127.0.0.1:3001/"
-where chrome >nul 2>nul
-if %ERRORLEVEL% EQU 0 (
-  start "" chrome "%CHROME_URL%"
+call :is_port_in_use 3002
+if errorlevel 1 (
+    echo Starting backend...
+    start "" /b node "backend\server.js"
 ) else (
-  start "" "%CHROME_URL%"
+    echo Backend already running at !BACKEND_URL!
 )
 
-echo Close Chrome to stop services.
+call :is_port_in_use 3001
+if errorlevel 1 (
+    echo Starting frontend...
+    start "" /b npm run dev
+) else (
+    echo Frontend already running at !FRONTEND_URL!
+)
+
+echo Waiting for servers to start...
+timeout /t 5 /nobreak > nul
+
+echo Opening browser...
+start "" "!FRONTEND_URL!"
+
+echo.
+echo Frontend: !FRONTEND_URL!
+echo Backend: !BACKEND_URL!
 echo.
 
-:MONITOR
-timeout /t 5 >nul
-powershell.exe -Command "if(-not (Get-Process chrome -ErrorAction SilentlyContinue)){ exit 0 } else { exit 1 }"
-if %ERRORLEVEL% NEQ 0 goto MONITOR
-
-echo Chrome closed. Shutting down backend and frontend...
-powershell.exe -Command "Stop-Process -Name node -ErrorAction SilentlyContinue"
+if /I "%SKIP_PAUSE%"=="1" (
+    exit /b 0
+)
 pause
+exit /b 0
+
+:is_port_in_use
+netstat -ano | findstr /R /C:":%~1 " >nul
+if %ERRORLEVEL% EQU 0 (
+    exit /b 0
+) else (
+    exit /b 1
+)

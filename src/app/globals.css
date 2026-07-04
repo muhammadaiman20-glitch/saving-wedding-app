@@ -1,41 +1,224 @@
 @import "tailwindcss";
 @theme {
-  --color-neon-blue: #00c8ff;
-  --color-neon-cyan: #00e5ff;
-  --color-neon-black: #050b14;
-  --color-deep-slate: #0b1220;
-  --shadow-neon: 0 0 20px rgba(0,200,255,0.35), 0 0 60px rgba(0,200,255,0.10);
+  /* WhatsApp Green Theme */
+  --color-whatsapp-green: #25d366;
+  --color-whatsapp-dark-green: #128c7e;
+  --color-whatsapp-teal: #075e54;
+  --color-whatsapp-light-green: #dcf8c6;
+  --color-whatsapp-bg: #111b21;
+  --color-whatsapp-panel: #202c33;
+  --color-whatsapp-hover: #2a3942;
+  --color-whatsapp-border: #222d34;
+  --color-whatsapp-text: #e9edef;
+  --color-whatsapp-text-secondary: #8696a0;
+  --color-whatsapp-blue: #53bdeb;
+  --color-whatsapp-check: #53bdeb;
 }
 body {
-  background-color: var(--color-neon-black);
-  color: #eaf6ff;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--color-whatsapp-bg);
+  color: var(--color-whatsapp-text);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  overflow-x: hidden;
 }
+
+/* WhatsApp-style chat bubbles */
+.whatsapp-bubble-sent {
+  background-color: #005c4b;
+  border-radius: 8px 8px 0 8px;
+  padding: 8px 12px;
+  max-width: 65%;
+  align-self: flex-end;
+  position: relative;
+}
+
+.whatsapp-bubble-received {
+  background-color: var(--color-whatsapp-panel);
+  border-radius: 8px 8px 8px 0;
+  padding: 8px 12px;
+  max-width: 65%;
+  align-self: flex-start;
+  position: relative;
+}
+
+/* WhatsApp panel/card style */
+.whatsapp-panel {
+  background-color: var(--color-whatsapp-panel);
+  border-bottom: 1px solid var(--color-whatsapp-border);
+}
+
+.whatsapp-hover:hover {
+  background-color: var(--color-whatsapp-hover);
+  transition: background-color 0.2s ease;
+}
+
+/* WhatsApp chat list item */
+.whatsapp-chat-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-whatsapp-border);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.whatsapp-chat-item:hover {
+  background-color: var(--color-whatsapp-hover);
+}
+
+/* WhatsApp green button */
+.whatsapp-green-btn {
+  background-color: var(--color-whatsapp-green);
+  color: #111b21;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.whatsapp-green-btn:hover {
+  background-color: #3be075;
+  transform: scale(1.02);
+}
+
+/* Status indicators like WhatsApp */
+.whatsapp-status-online {
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-whatsapp-green);
+  border-radius: 50%;
+  border: 2px solid var(--color-whatsapp-panel);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/* Scrollbar like WhatsApp */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #374045;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #455056;
+}
+
+/* Legacy glass class - updated for WhatsApp theme */
 .glass {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.06);
+  background-color: var(--color-whatsapp-panel);
+  border: 1px solid var(--color-whatsapp-border);
+  border-radius: 8px;
 }
 .glass-hover {
-  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, background 150ms ease;
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease,
+    border-color 300ms ease,
+    background 300ms ease;
 }
 .glass-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 44px rgba(0,200,255,0.15), inset 0 0 0 1px rgba(255,255,255,0.08);
-  border-color: rgba(0,200,255,0.5);
-  background: rgba(255,255,255,0.09);
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 60px rgba(236, 72, 153, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  border-color: rgba(236, 72, 153, 0.5);
+  background: rgba(255, 255, 255, 0.09);
 }
 .neon-text {
   color: var(--color-neon-blue);
-  text-shadow: 0 0 12px rgba(0,200,255,0.55);
+  text-shadow: 0 0 12px rgba(0, 200, 255, 0.55);
+}
+.romantic-text {
+  color: #f9a8d4;
+  text-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
+}
+
+/* Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.1);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Image hover effects */
+.gallery-image:hover {
+  transform: scale(1.1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hero gradient overlay enhancement */
+.hero-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 11, 20, 0.7) 0%,
+    rgba(5, 11, 20, 0.4) 50%,
+    rgba(5, 11, 20, 1) 100%
+  );
+}
+
+/* Romantic glow animation */
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(236, 72, 153, 0.5),
+      0 0 60px rgba(236, 72, 153, 0.3);
+  }
+}
+.romantic-glow {
+  animation: glow 2s ease-in-out infinite;
 }
 
 /* Nav */
 .nav-link {
-  @apply flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-slate-200 transition duration-150 hover:border-neon-blue/50 hover:text-white;
+  @apply flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-slate-200 transition duration-150 hover:border-pink-500/50 hover:text-white;
 }
 .nav-link[aria-current="page"] {
-  @apply border-neon-blue/70 bg-neon-blue/10 text-neon-blue;
+  @apply border-pink-500/70 bg-pink-500/10 text-pink-300;
+  animation: glow 2s ease-in-out infinite;
 }

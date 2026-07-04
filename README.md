@@ -2,7 +2,7 @@
 
 ## Run locally on Windows
 
-Double-click start-app.bat to:
+Double-click start.bat to:
 
 - install dependencies if needed
 - start the frontend on http://localhost:3001
