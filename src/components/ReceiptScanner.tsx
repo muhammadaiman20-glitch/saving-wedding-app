@@ -103,7 +103,7 @@ export default function ReceiptScanner({ onAmountExtracted }: { onAmountExtracte
     if (scannedReceipt?.amount) {
       // Save receipt to backend
       try {
-        await fetch('http://localhost:3002/api/receipts/save', {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/receipts/save`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

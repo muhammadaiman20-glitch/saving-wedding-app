@@ -7,3 +7,6 @@ tsconfig.tsbuildinfo
 *.jpeg
 *.jpg
 *.png
+.env.local
+
+.vercel

@@ -164,7 +164,7 @@ export default function Navigation() {
 
     try {
       // Call backend to reset all data
-      const response = await fetch('http://localhost:3002/api/reset/all', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/reset/all`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
