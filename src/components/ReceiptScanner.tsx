@@ -6,7 +6,7 @@ import Tesseract from 'tesseract.js'
 interface ScannedReceipt {
   amount: number | null
   date: string | null
-  description: string
+  description: string | null
   rawText: string
 }
 
@@ -76,7 +76,7 @@ export default function ReceiptScanner({ onAmountExtracted }: { onAmountExtracte
       setScannedReceipt({
         amount,
         date,
-        description: amount ? `Scanned receipt - RM${amount?.toFixed(2)}` : 'Receipt scanned, amount not detected',
+        description: amount ? `Scanned receipt - RM${amount.toFixed(2)}` : 'Receipt scanned, amount not detected',
         rawText: text
       })
     } catch (error) {

@@ -272,21 +272,6 @@ export default function Navigation() {
                         <p className="text-[#00c8ff] font-semibold">{loggedInUser}</p>
                       </div>
                       <button
-                        onClick={() => { setShowChangePinModal(true); setSettingsOpen(false); }}
-                        className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors flex items-center gap-3 text-slate-300 hover:text-[#00c8ff]"
-                      >
-                        <span>🔄</span>
-                        <span>Change PIN</span>
-                      </button>
-                      <button
-                        onClick={() => { setShowChangePinModal(true); setSettingsOpen(false); }}
-                        className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors flex items-center gap-3 text-slate-300 hover:text-[#00c8ff]"
-                      >
-                        <span>🔄</span>
-                        <span>Change PIN</span>
-                      </button>
-                      <hr className="border-white/10 my-2" />
-                      <button
                         onClick={() => { setShowResetModal(true); setSettingsOpen(false); }}
                         className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition-colors flex items-center gap-3 text-slate-300 hover:text-orange-400"
                       >
